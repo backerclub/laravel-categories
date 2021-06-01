@@ -11,23 +11,22 @@ use Rinvex\Support\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use Rinvex\Support\Traits\HasTranslations;
 use Rinvex\Support\Traits\ValidatingTrait;
-use Rinvex\Categories\Events\CategorySaved;
-use Rinvex\Categories\Events\CategoryDeleted;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 /**
  * Rinvex\Categories\Models\Category.
  *
- * @property int                                                                    $id
- * @property string                                                                 $slug
- * @property array                                                                  $name
- * @property array                                                                  $description
- * @property int                                                                    $_lft
- * @property int                                                                    $_rgt
- * @property int                                                                    $parent_id
- * @property \Carbon\Carbon|null                                                    $created_at
- * @property \Carbon\Carbon|null                                                    $updated_at
- * @property \Carbon\Carbon|null                                                    $deleted_at
+ * @property int                 $id
+ * @property string              $slug
+ * @property array               $name
+ * @property array               $description
+ * @property int                 $_lft
+ * @property int                 $_rgt
+ * @property int                 $parent_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $deleted_at
  * @property-read \Kalnoy\Nestedset\Collection|\Rinvex\Categories\Models\Category[] $children
  * @property-read \Rinvex\Categories\Models\Category|null                           $parent
  *
@@ -47,6 +46,7 @@ class Category extends Model
 {
     use HasSlug;
     use NodeTrait;
+    use SoftDeletes;
     use HasTranslations;
     use ValidatingTrait;
 
@@ -82,16 +82,6 @@ class Category extends Model
     ];
 
     /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'saved' => CategorySaved::class,
-        'deleted' => CategoryDeleted::class,
-    ];
-
-    /**
      * The attributes that are translatable.
      *
      * @var array
@@ -123,10 +113,8 @@ class Category extends Model
      */
     public function __construct(array $attributes = [])
     {
-        parent::__construct($attributes);
-
         $this->setTable(config('rinvex.categories.tables.categories'));
-        $this->setRules([
+        $this->mergeRules([
             'name' => 'required|string|strip_tags|max:150',
             'description' => 'nullable|string|max:32768',
             'slug' => 'required|alpha_dash|max:150|unique:'.config('rinvex.categories.tables.categories').',slug',
@@ -134,6 +122,8 @@ class Category extends Model
             NestedSet::RGT => 'sometimes|required|integer',
             NestedSet::PARENT_ID => 'nullable|integer',
         ]);
+
+        parent::__construct($attributes);
     }
 
     /**

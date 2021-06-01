@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 
 
+## [v5.0.5] - 2021-05-24
+- Merge rules instead of resetting, to allow adequate model override
+- Update spatie/laravel-translatable composer package to v5.0.0
+- Update spatie/laravel-sluggable composer package to v3.0.0
+
+## [v5.0.4] - 2021-05-11
+- Fix constructor initialization order (fill attributes should come next after merging fillables & rules)
+
+## [v5.0.3] - 2021-05-07
+- Drop old MySQL versions support that doesn't support json columns
+- Utilize SoftDeletes
+
+## [v5.0.2] - 2021-02-06
+- Simplify service provider model registration into IoC
+- Enable StyleCI risky mode
+
+## [v5.0.1] - 2020-12-25
+- Add support for PHP v8
+
+## [v5.0.0] - 2020-12-22
+- Upgrade to Laravel v8
+- Move custom eloquent model events to module layer from core package layer
+- Refactor and tweak Eloquent Events
+
 ## [v4.1.1] - 2020-07-16
 - Update validation rules
 
@@ -136,6 +160,12 @@ This project adheres to [Semantic Versioning](CONTRIBUTING.md).
 ## v0.0.1 - 2017-04-08
 - Rename package to "rinvex/categorizable" from "rinvex/category" based on 916d250
 
+[v5.0.5]: https://github.com/rinvex/laravel-categories/compare/v5.0.4...v5.0.5
+[v5.0.4]: https://github.com/rinvex/laravel-categories/compare/v5.0.3...v5.0.4
+[v5.0.3]: https://github.com/rinvex/laravel-categories/compare/v5.0.2...v5.0.3
+[v5.0.2]: https://github.com/rinvex/laravel-categories/compare/v5.0.1...v5.0.2
+[v5.0.1]: https://github.com/rinvex/laravel-categories/compare/v5.0.0...v5.0.1
+[v5.0.0]: https://github.com/rinvex/laravel-categories/compare/v4.1.1...v5.0.0
 [v4.1.1]: https://github.com/rinvex/laravel-categories/compare/v4.1.0...v4.1.1
 [v4.1.0]: https://github.com/rinvex/laravel-categories/compare/v4.0.6...v4.1.0
 [v4.0.6]: https://github.com/rinvex/laravel-categories/compare/v4.0.5...v4.0.6
